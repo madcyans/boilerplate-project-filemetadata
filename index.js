@@ -6,7 +6,13 @@ const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const app = express();
 
-app.post('/upload', upload.single('upfile'), (req, res) => {
+app.use(express.static('public')); // Serve static files like CSS
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'index.html'));
+});
+
+app.post('/api/fileanalyse', upload.single('upfile'), (req, res) => {
   if (!req.file) {
     return res.status(400).send({error: 'No file uploaded'});
   }
