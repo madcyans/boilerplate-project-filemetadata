@@ -7,6 +7,7 @@ const path = require('path'); // Import the path module
 const upload = multer({ dest: 'uploads/' });
 const app = express();
 
+app.use(cors());
 app.use(express.static('public')); // Serve static files like CSS
 
 app.get('/', (req, res) => {
