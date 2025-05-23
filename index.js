@@ -1,17 +1,22 @@
-var express = require('express');
-var cors = require('cors');
+const express = require('express');
+const cors = require('cors');
 require('dotenv').config()
+const multer = require('multer');
 
-var app = express();
+const upload = multer({ dest: 'uploads/' });
+const app = express();
 
-app.use(cors());
-app.use('/public', express.static(process.cwd() + '/public'));
+app.post('/upload', upload.single('upfile'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).send({error: 'No file uploaded'});
+  }
 
-app.get('/', function (req, res) {
-  res.sendFile(process.cwd() + '/views/index.html');
+  res.json({ 
+    fileName: req.file.originalname,
+      fileType: req.file.mimetype,
+      fileSize: req.file.size
+  });
 });
-
-
 
 
 const port = process.env.PORT || 3000;
