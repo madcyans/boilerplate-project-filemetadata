@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config()
 const multer = require('multer');
+const path = require('path'); // Import the path module
 
 const upload = multer({ dest: 'uploads/' });
 const app = express();
